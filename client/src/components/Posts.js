@@ -26,9 +26,9 @@ class Posts extends React.Component {
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-          <Button to={`/posts/${post.id}`}>
-            Edit
-          </Button>
+          <Link to={`/posts/${post.id}`}>
+            View
+          </Link>
           <Button onClick={() => this.props.dispatch(deletePost(post.id))}>
             Delete
           </Button>

@@ -21,11 +21,15 @@ export const addPost = (post) => {
         dispatch({ type: ADD_POST, post: res.data})
       })
   }
-
 }
 
-export const updatePost = (id) => {
-
+export const updatePost = (post) => {
+  return (dispatch) => {
+    axios.put(`/api/posts/${post.id}`, { post})
+      .then( res => {
+        dispatch({ type: UPDATE_POST, post: res.data })
+      })
+  }
 }
 
 export const deletePost = (id) => {
@@ -42,6 +46,11 @@ export default (state = [], action) => {
     case ADD_POST:
       return [action.post, ...state]
     case UPDATE_POST:
+      return state.map( p => {
+        if ( p.id === action.post.id )
+          return action.post
+        return p 
+      })
     case DELETE_POST:
       return state.filter( p => p.id !== action.id )
     default: 
