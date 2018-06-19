@@ -10,6 +10,7 @@ import {
 import { Link } from 'react-router-dom'
 import PostForm from './PostForm'
 
+
 class PostView extends React.Component {
   state = { showForm: false }
 
@@ -22,7 +23,9 @@ class PostView extends React.Component {
     const { showForm } = this.state
     return (
       <Container>
+        <Button>
         <Link to="/posts">View all Posts</Link>
+        </Button>
         <Button onClick={this.toggleForm}>
           { showForm ? 'Cancel' : 'Edit' }
         </Button>

@@ -6,15 +6,24 @@ import {
   Header, 
   Card,
   Button,
+  Divider,
 } from 'semantic-ui-react'
 import { getPosts } from '../reducers/posts'
 import { deletePost } from '../reducers/posts'
+import { addPost } from '../reducers/posts'
+import PostForm from './PostForm'
+
+
 
 class Posts extends React.Component {
+  state = { showForm: false }
    
-  
-  
+  showForm = () => {
+    this.setState({ showForm: !this.state.showForm })
+  }
+
   posts = () => {
+  
     return this.props.posts.map( post => 
       <Card key={post.id}>
         <Card.Content>
@@ -26,9 +35,11 @@ class Posts extends React.Component {
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-          <Link to={`/posts/${post.id}`}>
-            View
-          </Link>
+          <Button>
+            <Link to={`/posts/${post.id}`}>
+              View
+            </Link>
+          </Button>
           <Button onClick={() => this.props.dispatch(deletePost(post.id))}>
             Delete
           </Button>
@@ -41,6 +52,11 @@ class Posts extends React.Component {
     return (
       <Container>
         <Header as="h4" textAlign="center">Posts about Señor Norris</Header>
+        { this.state.showForm && <PostForm /> }
+        <Button onClick={this.showForm}>
+          Add
+        </Button>
+        <Divider />
         <Card.Group itemsPerRow={3}>
           { this.posts() }
         </Card.Group>
