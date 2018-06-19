@@ -14,7 +14,13 @@ export const getPosts = (setLoaded) => {
   }
 }
 
-export const addPost = () => {
+export const addPost = (post) => {
+  return (dispatch) => {
+    axios.post('api/posts', { post })
+      .then( res => {
+        dispatch({ type: ADD_POST, post: res.data})
+      })
+  }
 
 }
 
@@ -23,7 +29,10 @@ export const updatePost = (id) => {
 }
 
 export const deletePost = (id) => {
-
+  return (dispatch) => {
+    axios.delete(`api/posts/${id}`)
+      .then( res => dispatch({ type: DELETE_POST, id }) )
+  }
 }
 
 export default (state = [], action) => {
@@ -31,8 +40,10 @@ export default (state = [], action) => {
     case POSTS:
       return action.posts
     case ADD_POST:
+      return [action.post, ...state]
     case UPDATE_POST:
     case DELETE_POST:
+      return state.filter( p => p.id !== action.id )
     default: 
       return state
   }

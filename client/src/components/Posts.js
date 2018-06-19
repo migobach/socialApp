@@ -5,8 +5,10 @@ import {
   Container, 
   Header, 
   Card,
+  Button,
 } from 'semantic-ui-react'
 import { getPosts } from '../reducers/posts'
+import { deletePost } from '../reducers/posts'
 
 class Posts extends React.Component {
    
@@ -22,6 +24,14 @@ class Posts extends React.Component {
           <Card.Meta>
             {post.author}
           </Card.Meta>
+        </Card.Content>
+        <Card.Content extra>
+          <Button to={`/posts/${post.id}`}>
+            Edit
+          </Button>
+          <Button onClick={() => this.props.dispatch(deletePost(post.id))}>
+            Delete
+          </Button>
         </Card.Content>
       </Card>
     )
